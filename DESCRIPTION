@@ -13,3 +13,5 @@ Imports:
     mirtCAT
 URL: https://github.com/alexandrejaloto/microEnem
 BugReports: https://github.com/alexandrejaloto/microEnem/issues
+Depends: 
+    R (>= 2.10)
