@@ -17,3 +17,5 @@ Imports:
     mirtCAT
 Depends: 
     R (>= 2.10)
+URL: https://github.com/alexandrejaloto/microEnem
+BugReports: https://github.com/alexandrejaloto/microEnem/issues
