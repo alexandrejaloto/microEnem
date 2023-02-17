@@ -3,7 +3,14 @@
 #'
 #' @param resp vetor de respostas de um ou mais sujeitos. O
 #' vetor deve ser no mesmo formato da variável TX_RESPOSTA
-#' dos microdados do Enem
+#' dos microdados do Enem. É importante destacar que desde 2010 nos
+#' cadernos de Linguagens e Códigos existem cinco itens de língua
+#' inglesa e cinco itens de língua espanhola, por isso o vetor de
+#' respostas nessa área possui 50 caracteres. A pessoa responde
+#' somente uma dessas línguas e nos microdados as respostas aos cinco
+#' itens da outra língua são marcados com "9". A função `calcula.nota`
+#' automaticamente transforma essa resposta "9" em `NA` e esses
+#' itens não considerados para o cálculo.
 #' @param codigo código da prova disponível no dicionário dos
 #' microdados. Essa informação também está disponível no
 #' objeto `dic.cad` deste pacote
@@ -47,6 +54,15 @@
 #'
 #' # comparar com a nota oficial
 #' micro$NU_NOTA_LC[c(84, 97:99)]
+#'
+#' # calcular a nota de um sujeito que não está nos microdados
+#' # vetor de resposta de uma pessoa fictícia que respondeu o caderno de Linguagens e Códigos em 2019
+#' resp <- c('99999BBDABBDBAADCBABBADAACBDDDDEACACBCACAABBBECBEC')
+#'
+#' # calcular a nota
+#' nota <- calc.nota(resp, codigo = 511)
+#' nota
+#' @export
 
 
 calc.nota <- function(

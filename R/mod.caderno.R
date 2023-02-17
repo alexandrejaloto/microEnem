@@ -16,6 +16,7 @@
 #' mod <- mod.caderno(511)
 #' mirt::coef(mod, IRTpars = TRUE, simplify = TRUE)
 #'
+#' @export
 
 mod.caderno <- function(
   codigo = NULL

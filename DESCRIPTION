@@ -1,12 +1,8 @@
 Package: microEnem
-Title: What the Package Does (One Line, Title Case)
+Title: Manipulação dos Microdados do Enem
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Author: Alexandre Jaloto [aut, cre] (<https://orcid.org/0000-0002-5291-1768>)
+Description: Manipulação dos microdados do Exame Nacional do Ensino Médio (Enem). Calcula a nota na escala oficial do Enem.
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -15,7 +11,5 @@ Imports:
     data.table,
     mirt,
     mirtCAT
-Depends: 
-    R (>= 2.10)
 URL: https://github.com/alexandrejaloto/microEnem
 BugReports: https://github.com/alexandrejaloto/microEnem/issues

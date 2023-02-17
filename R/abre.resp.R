@@ -13,6 +13,7 @@
 #' micro <- data.table::fread('MICRODADOS_ENEM_2019.csv', nrows = 100)
 #'
 #' resp <- abre.resp(micro$TX_RESPOSTAS_LC)
+#' @export
 
 
 abre.resp <- function (unico)
