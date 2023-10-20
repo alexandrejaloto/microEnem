@@ -1,11 +1,12 @@
 #' @title Calcula nota do Enem
 #' @description Calcula a nota de um sujeito a escala do Enem (500, 100)
 #'
-#' @param resp vetor de respostas de um ou mais sujeitos. O
+#' @param resps vetor de respostas de um ou mais sujeitos. O
 #' vetor deve ser no mesmo formato da variável TX_RESPOSTA
 #' dos microdados do Enem. É importante destacar que desde 2010 nos
 #' cadernos de Linguagens e Códigos existem cinco itens de língua
-#' inglesa e cinco itens de língua espanhola, por isso o vetor de
+#' inglesa e cinco itens de língua espanhola, por isso em algumas edições
+#' o vetor de
 #' respostas nessa área possui 50 caracteres. A pessoa responde
 #' somente uma dessas línguas e nos microdados as respostas aos cinco
 #' itens da outra língua são marcados com "9". A função `calcula.nota`
@@ -14,6 +15,10 @@
 #' @param codigo código da prova disponível no dicionário dos
 #' microdados. Essa informação também está disponível no
 #' objeto `dic.cad` deste pacote
+#' @param lingua vetor com indicação da língua estrangeira escolhida
+#' pela pessoa. Essa informação corresponde à variável `TP_LINGUA`
+#' nos microdados (`0` para inglês, `1` para espanhol).
+#'
 #' @details A nota é calculada pelo método expected a
 #' posteriori (EAP), com 40 pontos de quadratura de -4 a 4.
 #' A média da distribuição priori é 0 e o desvio padrão, 1. No
@@ -66,8 +71,9 @@
 
 
 calc.nota <- function(
-  resp,
-  codigo = NULL
+  resps,
+  codigo = NULL,
+  lingua = NULL
   # ano = NULL,
   # aplicacao = NULL,
   # area = NULL,
@@ -86,7 +92,7 @@ calc.nota <- function(
   key <- subset(key, IN_ITEM_ABAN == 0)
 
   # abrir o vetor de respostas
-  resp <- abre.resp(resp)
+  resp <- abre.resp(resps)
 
   # área e ano do caderno
   area <- dic.cad[dic.cad$codigo == codigo, 'area']
@@ -94,15 +100,22 @@ calc.nota <- function(
 
   # transformar 9 em NA nos itens de língua estrangeira
   if (area == 'LC' & ano != 2009)
+    {
     resp <- apply(resp, 2, \(x)ifelse(x == '9', NA, x))
+
+    if (ano == 2022)
+      resp <- insereNA(data = resp, lingua = lingua)
+  }
 
   # retirar o item anulado da resposta
   if (length(anulado) > 0)
-    resp <- resp[,-anulado]
+    if(length(resps) > 1)
+    {resp <- resp[,-anulado]} else {resp <- t(data.frame(resp[,-anulado]))}
 
   # corrigir as respostas
-  resp <- mirt::key2binary(resp, key)
+  resp <- mirt::key2binary(resp, key$TX_GABARITO)
 
+  # key$TX_GABARITO
   # calcular a nota
   nota <- data.frame(mirt::fscores(mod, response.pattern = resp, quadpts = 40, theta_lim = c(-4,4)))$F1
 

@@ -4,14 +4,15 @@
 \alias{calc.nota}
 \title{Calcula nota do Enem}
 \usage{
-calc.nota(resp, codigo = NULL)
+calc.nota(resps, codigo = NULL, lingua = NULL)
 }
 \arguments{
-\item{resp}{vetor de respostas de um ou mais sujeitos. O
+\item{resps}{vetor de respostas de um ou mais sujeitos. O
 vetor deve ser no mesmo formato da variável TX_RESPOSTA
 dos microdados do Enem. É importante destacar que desde 2010 nos
 cadernos de Linguagens e Códigos existem cinco itens de língua
-inglesa e cinco itens de língua espanhola, por isso o vetor de
+inglesa e cinco itens de língua espanhola, por isso em algumas edições
+o vetor de
 respostas nessa área possui 50 caracteres. A pessoa responde
 somente uma dessas línguas e nos microdados as respostas aos cinco
 itens da outra língua são marcados com "9". A função \code{calcula.nota}
@@ -21,6 +22,10 @@ itens não considerados para o cálculo.}
 \item{codigo}{código da prova disponível no dicionário dos
 microdados. Essa informação também está disponível no
 objeto \code{dic.cad} deste pacote}
+
+\item{lingua}{vetor com indicação da língua estrangeira escolhida
+pela pessoa. Essa informação corresponde à variável \code{TP_LINGUA}
+nos microdados (\code{0} para inglês, \code{1} para espanhol).}
 }
 \value{
 as notas na escala oficial do Enem
