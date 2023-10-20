@@ -10,7 +10,7 @@
 
 insereNA <- function(data, lingua)
 {
-  if(class(data) == 'character')
+  if(class(data)[1] == 'character')
   {data <- data.frame(t(data))} else {data <- data.frame(data)}
 
   data$id <- 1:nrow(data)
